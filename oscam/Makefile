@@ -1,14 +1,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=oscam
-PKG_REV:=f783da
+PKG_REV:=r11401
 PKG_VERSION:=1.20-$(PKG_REV)
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=f783dafd91276899a2067dae2411fb5682266585
+PKG_SOURCE_VERSION:=349e06116918c8d1cdbac62695c0eff080424081
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_URL:=http://repo.or.cz/oscam.git
+PKG_SOURCE_URL:=https://github.com/nx111/oscam.git
 PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.bz2
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_VERSION)
 
@@ -39,19 +39,18 @@ define Package/oscam/conffiles
 /etc/oscam/
 endef
 
-PKG_CMAKE_OPTS_TARGET="-DLIBUSBDIR=$SYSROOT_PREFIX/usr \
-                       -DWITH_SSL=0 \
-                       -DHAVE_LIBCRYPTO=0 \
-                       -DHAVE_DVBAPI=1 -DWITH_STAPI=0 \
-                       -DWEBIF=1 \
-                       -DWITH_DEBUG=0 \
-                       -DOPTIONAL_INCLUDE_DIR=$SYSROOT_PREFIX/usr/include \
-                       -DSTATIC_LIBUSB=1 \
-		       -DCLOCKFIX=0"
+CONFIGURE_CMD = ./config.sh
+CONFIGURE_ARGS = \
+	--enable all
 
 MAKE_FLAGS += \
 	CONF_DIR=/etc/oscam \
 	OSCAM_BIN=Distribution/oscam \
+        USE_SSL=1 \
+	USE_LIBUSB=1 \
+	USE_PCSC=1 \
+	USE_LIBCRYPTO=1 \
+	LEDSUPPORT=1
 
 
 define Package/oscam/install
