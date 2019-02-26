@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=oscam
-PKG_REV:=r11401
+PKG_REV:=r11503
 PKG_VERSION:=1.20-$(PKG_REV)
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
-PKG_SOURCE_VERSION:=349e06116918c8d1cdbac62695c0eff080424081
+PKG_SOURCE_VERSION:=d5bc77fe2f0023251503e98a2739f2abaaea04ff
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 PKG_SOURCE_URL:=https://github.com/nx111/oscam.git
 PKG_SOURCE:=$(PKG_SOURCE_SUBDIR).tar.bz2
@@ -60,8 +60,8 @@ define Package/oscam/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/oscam.init $(1)/etc/init.d/oscam
 
-	$(INSTALL_DIR) $(1)/etc/config
-	$(INSTALL_CONF) ./files/oscam.conf $(1)/etc/config/oscam
+	$(INSTALL_DIR) $(1)/etc/oscam
+	$(INSTALL_DATA) ./files/oscam/oscam.* $(1)/etc/oscam
 endef
 
 
